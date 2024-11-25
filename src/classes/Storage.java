@@ -1,17 +1,15 @@
 package classes;
 public class Storage{
-    private String storageId; // Unique identifier for each storage unit
-    private int rows;         // Number of rows in the storage unit
-    private int columns;      // Number of columns in the storage unit
+    private String storageId; 
+    private int rows;         
+    private int columns;      
 
-    // Constructor
     public Storage(String storageId, int rows, int columns){
         this.storageId = storageId;
         this.rows = rows;
         this.columns = columns;
     }
 
-    // Getters & Setters
     public String getStorageId(){
         return storageId;
     }
@@ -36,7 +34,6 @@ public class Storage{
         this.columns = columns;
     }
 
-    // Retrieves details of a storage unit
     public String getStorageDetails(){
         return String.format("Storage ID: %s, Rows: %d, Columns: %d", storageId, rows, columns);
     }
