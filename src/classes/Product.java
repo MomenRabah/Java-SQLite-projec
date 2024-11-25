@@ -1,12 +1,11 @@
 package classes;
 public class Product{
-    private String productId; // Unique identifier for each product
-    private String storageId; // Storage unit the product is located in
-    private int row;          // Row location of the product
-    private int column;       // Column location of the product
-    private String name;      // Name of the product
+    private String productId; 
+    private String storageId; 
+    private int row;          
+    private int column;       
+    private String name;      
 
-    // Constructor
     public Product(String productId, String storageId, int row, int column, String name){
         this.productId = productId;
         this.storageId = storageId;
@@ -15,7 +14,7 @@ public class Product{
         this.name = name;
     }
 
-    // Getters & Setters
+    
     public String getProductId(){
         return productId;
     }
@@ -56,7 +55,6 @@ public class Product{
         this.name = name;
     }
 
-    // Retrieves details of a product
     public String getProductDetails(){
         return String.format("Product ID: %s, Name: %s, Storage ID: %s, Row: %d, Column: %d",
                 productId, name, storageId, row, column);
