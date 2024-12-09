@@ -45,4 +45,39 @@ public class UserServices {
         }
         return null;
     }
+
+    public User getUserByUsername(String username) {
+        String sql = "SELECT * FROM Users WHERE username = ?";
+        try (Connection conn = SQLiteConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String roleStr = rs.getString("role");
+                    User.Role role = User.Role.fromString(roleStr);
+
+                    if (role == User.Role.ADMIN) {
+                        return new Admin(
+                                rs.getInt("userId"),
+                                rs.getString("username"),
+                                rs.getString("password")
+                        );
+                    } else if (role == User.Role.EMPLOYEE) {
+                        return new Employee(
+                                rs.getInt("userId"),
+                                rs.getString("username"),
+                                rs.getString("password")
+                        );
+                    } else {
+                        throw new IllegalArgumentException("Invalid role: " + roleStr);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error retrieving user by username: " + e.getMessage());
+        }
+        return null;
+    }
+
 }
