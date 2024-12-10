@@ -24,12 +24,14 @@ public class DatabaseInitializer {
                 "columns INTEGER NOT NULL);";
 
         String createProductsTable = "CREATE TABLE IF NOT EXISTS Products (" +
-                "productId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "storageId INTEGER NOT NULL," +
-                "row INTEGER NOT NULL," +
-                "column INTEGER NOT NULL," +
-                "name TEXT NOT NULL," +
-                "FOREIGN KEY (storageId) REFERENCES Storages(storageId));";
+                "productId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "storageId INTEGER NOT NULL, " +
+                "row INTEGER NOT NULL, " +
+                "column INTEGER NOT NULL, " +
+                "name TEXT NOT NULL, " +
+                "FOREIGN KEY (storageId) REFERENCES Storages(storageId), " +
+                "UNIQUE (storageId, row, column));";
+
 
         String createHistoryLogsTable = "CREATE TABLE IF NOT EXISTS HistoryLogs (" +
                 "logId INTEGER PRIMARY KEY AUTOINCREMENT," +

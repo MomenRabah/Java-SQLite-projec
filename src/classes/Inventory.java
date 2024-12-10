@@ -143,28 +143,28 @@ public class Inventory {
                 }
                 case 2 -> {
                     try {
-                        this.currentUser.readProduct();
+                        this.currentUser.readProducts();
                     }catch (UnauthorizedException e) {
                         System.out.println(e.getMessage());
                     }
                 }
                 case 3 -> {
                     try {
-                        this.currentUser.updateStorage();
+                        this.currentUser.updateProduct();
                     } catch (UnauthorizedException e) {
                         System.out.println(e.getMessage());
                     }
                 }
                 case 4 -> {
                     try {
-                        this.currentUser.deleteStorage();
+                        this.currentUser.deleteProduct();
                     }catch (UnauthorizedException e) {
                         System.out.println(e.getMessage());
                     }
                 }
                 case 5 -> {
                     try {
-                        this.currentUser.readStorage();
+                        this.currentUser.readProduct();
                     }catch (UnauthorizedException e) {
                         System.out.println(e.getMessage());
                     }
