@@ -6,11 +6,11 @@ public class Inventory {
     private final Authorization authorization = new Authorization();
     private User currentUser;
 
-    public void start() {
+    public void start() throws UnauthorizedException {
         loginPage();
     }
 
-    private void loginPage() {
+    private void loginPage() throws UnauthorizedException {
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
@@ -34,7 +34,7 @@ public class Inventory {
         }
     }
 
-    private void mainMenu() {
+    private void mainMenu() throws UnauthorizedException {
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
@@ -63,7 +63,7 @@ public class Inventory {
         loginPage();
     }
 
-    private void storagesSection(Scanner scanner) {
+    private void storagesSection(Scanner scanner) throws UnauthorizedException {
         boolean isRunning = true;
 
         while (isRunning) {
@@ -72,16 +72,48 @@ public class Inventory {
             System.out.println("2. Read Storages");
             System.out.println("3. Update Storage");
             System.out.println("4. Delete Storage");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. Read Storage");
+            System.out.println("6. Back to Main Menu");
             System.out.print("Choose an option: ");
 
             int choice = getUserInput(scanner);
             switch (choice) {
-                case 1 -> System.out.println("Creating a new storage...");
-                case 2 -> System.out.println("Reading all storages...");
-                case 3 -> System.out.println("Updating a storage...");
-                case 4 -> System.out.println("Deleting a storage...");
-                case 5 -> isRunning = false;
+                case 1 -> {
+                    try {
+                        this.currentUser.createStorage();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 2 -> {
+                    try {
+                        this.currentUser.readStorages();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 3 -> {
+                    try {
+                        this.currentUser.updateStorage();
+                    } catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 4 -> {
+                    try {
+                        this.currentUser.deleteStorage();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 5 -> {
+                    try {
+                        this.currentUser.readStorage();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 6 -> isRunning = false;
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
@@ -96,16 +128,48 @@ public class Inventory {
             System.out.println("2. Read Products");
             System.out.println("3. Update Product");
             System.out.println("4. Delete Product");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. Read Product");
+            System.out.println("6. Back to Main Menu");
             System.out.print("Choose an option: ");
 
             int choice = getUserInput(scanner);
             switch (choice) {
-                case 1 -> currentUser.createProduct();
-                case 2 -> System.out.println("Reading all products...");
-                case 3 -> System.out.println("Updating a product...");
-                case 4 -> System.out.println("Deleting a product...");
-                case 5 -> isRunning = false;
+                case 1 -> {
+                    try {
+                        this.currentUser.createProduct();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 2 -> {
+                    try {
+                        this.currentUser.readProduct();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 3 -> {
+                    try {
+                        this.currentUser.updateStorage();
+                    } catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 4 -> {
+                    try {
+                        this.currentUser.deleteStorage();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 5 -> {
+                    try {
+                        this.currentUser.readStorage();
+                    }catch (UnauthorizedException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 6 -> isRunning = false;
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
@@ -116,7 +180,7 @@ public class Inventory {
         System.out.println("Displaying user actions history...");
     }
 
-    private void login(Scanner scanner) {
+    private void login(Scanner scanner) throws UnauthorizedException {
         System.out.print("\nEnter your username: ");
         String username = scanner.next();
         System.out.print("Enter your password: ");
@@ -132,7 +196,7 @@ public class Inventory {
         }
     }
 
-    private void register(Scanner scanner) {
+    private void register(Scanner scanner) throws UnauthorizedException {
         System.out.print("\nEnter your desired username: ");
         String username = scanner.next();
         System.out.print("Enter your desired password: ");

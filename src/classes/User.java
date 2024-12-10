@@ -65,6 +65,10 @@ public class User {
         throw new UnauthorizedException("Unauthorized to read product");
     }
 
+    public void readProducts() throws UnauthorizedException {
+        throw new UnauthorizedException("Unauthorized to read products");
+    }
+
     public void updateProduct() throws UnauthorizedException {
         throw new UnauthorizedException("Unauthorized to update product");
     }
@@ -79,6 +83,10 @@ public class User {
 
     public void readStorage() throws UnauthorizedException {
         throw new UnauthorizedException("Unauthorized to read storage");
+    }
+
+    public void readStorages() throws UnauthorizedException {
+        throw new UnauthorizedException("Unauthorized to read storages");
     }
 
     public void updateStorage() throws UnauthorizedException {

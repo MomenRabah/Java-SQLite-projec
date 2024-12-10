@@ -6,7 +6,12 @@ public class Main {
     private static final Inventory inventory = new Inventory();
 
     public static void main(String[] args) {
-        DatabaseInitializer.initialize();
-        inventory.start();
+        try{
+            DatabaseInitializer.initialize();
+            inventory.start();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
     }
 }

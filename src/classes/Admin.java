@@ -57,47 +57,52 @@ public class Admin extends User {
 //        }
 //
 //    }
-//    @Override
-//    public void createStorage() {
-//        System.out.println("Enter the number of rows and columns for the new storage unit:");
-//        int rows = scanner.nextInt();
-//        int cols = scanner.nextInt();
-//        Storage creaetedStorage = Storage.createStorage(rows, cols);
-//        System.out.println(this.getUsername()+" has created a storage unit successfully.");
+    @Override
+    public void createStorage() {
+        System.out.println("Enter the number of rows and columns for the new storage unit:");
+        int rows = scanner.nextInt();
+        int cols = scanner.nextInt();
+        Storage creaetedStorage = Storage.createStorage(rows, cols);
+        System.out.println(this.getUsername()+" has created a storage unit successfully.");
 //        HistoryLog.history(this, "Storage", creaetedStorage.getStorageId(), HistoryLog.Action.CREATE);
-//    }
-//
-//    @Override
-//    public void readStorage() {
-//        System.out.println( this.getUsername() +"has accessed storage unit details.");
-//        Storage.readStorages();
-//    }
-//
-//    @Override
-//    public void updateStorage() {
-//        System.out.println("Enter storage ID to update:");
-//        int storageId = scanner.nextInt();
-//        System.out.println("rows updated: ");
-//        int rows = scanner.nextInt();
-//        System.out.println("columns updated :");
-//        int cols = scanner.nextInt();
-//        Storage updatedStorage = Storage.updateStorage(storageId,rows,cols);
-//
-//        System.out.println(this.getUsername()+" has updated the storage unit successfully.");
+    }
+
+    @Override
+    public void readStorage() {
+        int storageId = scanner.nextInt();
+        Storage.readStorage(storageId);
+    }
+
+    @Override
+    public void updateStorage() {
+        System.out.println("Enter storage ID to update:");
+        int storageId = scanner.nextInt();
+        System.out.println("rows updated: ");
+        int rows = scanner.nextInt();
+        System.out.println("columns updated :");
+        int cols = scanner.nextInt();
+        Storage updatedStorage = Storage.updateStorage(storageId,rows,cols);
+
+        System.out.println(this.getUsername()+" has updated the storage unit successfully.");
 //        HistoryLog.history(this, "Storage", updatedStorage.getStorageId(), HistoryLog.Action.UPDATE);
-//    }
-//
-//    @Override
-//    public void deleteStorage() {
-//        System.out.println("Enter storage ID to delete:");
-//        int storageID=scanner.nextInt();
-//        int deletedStorage = Storage.deleteStorage(storageID);
-//        if (deletedStorage != 0){
-//            System.out.println(this.getUsername()+" has deleted the storage unit successfully.");
+    }
+
+    @Override
+    public void deleteStorage() {
+        System.out.println("Enter storage ID to delete:");
+        int storageID=scanner.nextInt();
+        int deletedStorage = Storage.deleteStorage(storageID);
+        if (deletedStorage != 0){
+            System.out.println(this.getUsername()+" has deleted the storage unit successfully.");
 //            HistoryLog.history(this, "Storage", deletedStorage, HistoryLog.Action.DELETE);
-//        } else {
-//            System.out.println("No storage unit found with id: " + storageID);
-//        }
-//    }
+        } else {
+            System.out.println("No storage unit found with id: " + storageID);
+        }
+    }
+
+    @Override
+    public void readStorages() {
+        Storage.readStorages();
+    }
 }
 
