@@ -27,8 +27,9 @@ public class Employee extends User {
         Product createdProduct = Product.createProduct(storageId, row, column, name);
         if (createdProduct != null) {
             System.out.println(this.getUsername()+" has created a product successfully.");
+        HistoryLog.history(this, "Product", createdProduct.getProductId(), HistoryLog.Action.CREATED);
+
         }
-//        HistoryLog.history(this, "Product", createdProduct.getProductId(), HistoryLog.Action.CREATE);
 
     }
     @Override
@@ -59,8 +60,9 @@ public class Employee extends User {
         Product updatedProduct = Product.updateProduct(productId, storageId, row, column, newName);
         if(updatedProduct != null){
             System.out.println(this.getUsername()+" has updated the product successfully.");
+        HistoryLog.history(this, "Product", updatedProduct.getProductId(), HistoryLog.Action.UPDATED);
+
         }
-//        HistoryLog.history(this, "Product", updatedProduct.getProductId(), HistoryLog.Action.UPDATE);
     }
     @Override
     public void deleteProduct() {
@@ -69,7 +71,7 @@ public class Employee extends User {
         int deletedProduct = Product.deleteProduct(productId);
         if (deletedProduct != 0) {
             System.out.println(this.getUsername()+" has deleted the product successfully.");
-//            HistoryLog.history(this, "Product", deletedProduct, HistoryLog.Action.DELETE);
+            HistoryLog.history(this, "Product", deletedProduct, HistoryLog.Action.DELETED);
         }else{
             System.err.println("Error: Product not found.");
         }

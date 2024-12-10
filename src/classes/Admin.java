@@ -23,8 +23,9 @@ public class Admin extends User {
         Product createdProduct = Product.createProduct(storageId, row, column, name);
         if (createdProduct != null) {
             System.out.println(this.getUsername()+" has created a product successfully.");
+            HistoryLog.history(this, "Product", createdProduct.getProductId(), HistoryLog.Action.CREATED);
         }
-//        HistoryLog.history(this, "Product", createdProduct.getProductId(), HistoryLog.Action.CREATE);
+//
 
     }
     @Override
@@ -55,8 +56,9 @@ public class Admin extends User {
         Product updatedProduct = Product.updateProduct(productId, storageId, row, column, newName);
         if(updatedProduct != null){
             System.out.println(this.getUsername()+" has updated the product successfully.");
+            HistoryLog.history(this, "Product", updatedProduct.getProductId(), HistoryLog.Action.UPDATED);
+
         }
-//        HistoryLog.history(this, "Product", updatedProduct.getProductId(), HistoryLog.Action.UPDATE);
     }
     @Override
     public void deleteProduct() {
@@ -65,7 +67,7 @@ public class Admin extends User {
         int deletedProduct = Product.deleteProduct(productId);
         if (deletedProduct != 0) {
             System.out.println(this.getUsername()+" has deleted the product successfully.");
-//            HistoryLog.history(this, "Product", deletedProduct, HistoryLog.Action.DELETE);
+            HistoryLog.history(this, "Product", deletedProduct, HistoryLog.Action.DELETED);
         }else{
             System.err.println("Error: Product not found.");
         }
@@ -79,8 +81,8 @@ public class Admin extends User {
         Storage creaetedStorage = Storage.createStorage(rows, cols);
         if(creaetedStorage != null){
             System.out.println(this.getUsername()+" has created the storage unit successfully.");
+            HistoryLog.history(this, "Storage", creaetedStorage.getStorageId(), HistoryLog.Action.CREATED);
         }
-//        HistoryLog.history(this, "Storage", creaetedStorage.getStorageId(), HistoryLog.Action.CREATE);
     }
 
     @Override
@@ -100,10 +102,9 @@ public class Admin extends User {
         Storage updatedStorage = Storage.updateStorage(storageId,rows,cols);
         if(updatedStorage != null){
             System.out.println(this.getUsername()+" has updated the storage unit successfully.");
-
+            HistoryLog.history(this, "Storage", updatedStorage.getStorageId(), HistoryLog.Action.UPDATED);
         }
 
-//        HistoryLog.history(this, "Storage", updatedStorage.getStorageId(), HistoryLog.Action.UPDATE);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class Admin extends User {
         int deletedStorage = Storage.deleteStorage(storageID);
         if (deletedStorage != 0){
             System.out.println(this.getUsername()+" has deleted the storage unit successfully.");
-//            HistoryLog.history(this, "Storage", deletedStorage, HistoryLog.Action.DELETE);
+            HistoryLog.history(this, "Storage", deletedStorage, HistoryLog.Action.DELETED);
         } else {
             System.err.println("No storage unit found with id: " + storageID);
         }
@@ -122,6 +123,17 @@ public class Admin extends User {
     @Override
     public void readStorages() {
         Storage.readStorages();
+    }
+
+    @Override
+    public void readHistory(){
+        HistoryLog.printAllHistoryLogs();
+    }
+    @Override
+    public void readUserHistory(){
+        System.out.println("Enter User ID to read history:");
+        int userId = scanner.nextInt();
+        HistoryLog.printAllUserHistoryLogs(userId);
     }
 }
 

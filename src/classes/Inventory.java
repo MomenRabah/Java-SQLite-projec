@@ -53,6 +53,7 @@ public class Inventory {
                 case 3 -> historySection();
                 case 4 -> {
                     System.out.println("Logging out...");
+                    HistoryLog.historyAuth(this.currentUser,  HistoryLog.AuthAction.LOGGEDOUT);
                     currentUser = null;
                     isRunning = false;
                 }
@@ -82,35 +83,35 @@ public class Inventory {
                     try {
                         this.currentUser.createStorage();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 2 -> {
                     try {
                         this.currentUser.readStorages();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 3 -> {
                     try {
                         this.currentUser.updateStorage();
                     } catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 4 -> {
                     try {
                         this.currentUser.deleteStorage();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 5 -> {
                     try {
                         this.currentUser.readStorage();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 6 -> isRunning = false;
@@ -138,35 +139,35 @@ public class Inventory {
                     try {
                         this.currentUser.createProduct();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 2 -> {
                     try {
                         this.currentUser.readProducts();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 3 -> {
                     try {
                         this.currentUser.updateProduct();
                     } catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 4 -> {
                     try {
                         this.currentUser.deleteProduct();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 5 -> {
                     try {
                         this.currentUser.readProduct();
                     }catch (UnauthorizedException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 }
                 case 6 -> isRunning = false;
@@ -176,8 +177,38 @@ public class Inventory {
     }
 
     private void historySection() {
-        System.out.println("\nHistory Section:");
-        System.out.println("Displaying user actions history...");
+        Scanner scanner = new Scanner(System.in);
+        boolean isRunning = true;
+
+        while (isRunning) {
+            System.out.println("\nHistory Section:");
+            System.out.println("1. All History");
+            System.out.println("2. User History");
+            System.out.println("3. Back to Main Menu");
+            System.out.print("Choose an option: ");
+
+            int choice = getUserInput(scanner);
+            switch (choice) {
+                case 1 ->  {
+                    try {
+                        this.currentUser.readHistory();
+                    }catch (UnauthorizedException e) {
+                        System.err.println(e.getMessage());
+                    }
+                }
+                case 2 -> {
+                    try {
+                        this.currentUser.readUserHistory();
+                    }catch (UnauthorizedException e) {
+                        System.err.println(e.getMessage());
+                    }
+                }
+                case 3 -> {
+                    isRunning = false;
+                }
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
     }
 
     private void login(Scanner scanner) throws UnauthorizedException {
@@ -190,9 +221,10 @@ public class Inventory {
         if (loggedUser != null) {
             System.out.println("Login successful! Welcome, " + loggedUser.getUsername() + ".");
             currentUser = loggedUser;
+            HistoryLog.historyAuth(this.currentUser,  HistoryLog.AuthAction.LOGGEDIN);
             mainMenu();
         } else {
-            System.out.println("Invalid username or password. Please try again.");
+            System.err.println("Invalid username or password. Please try again.");
         }
     }
 
@@ -208,9 +240,10 @@ public class Inventory {
         if (registeredUser != null) {
             System.out.println("Registration successful! Welcome, " + registeredUser.getUsername() + ".");
             currentUser = registeredUser;
+            HistoryLog.historyAuth(this.currentUser,  HistoryLog.AuthAction.REGISTERED);
             mainMenu();
         } else {
-            System.out.println("Registration failed. Please try again.");
+            System.err.println("Registration failed. Please try again.");
         }
     }
 

@@ -96,4 +96,11 @@ public class User {
     public void deleteStorage() throws UnauthorizedException {
         throw new UnauthorizedException("Unauthorized to delete storage");
     }
+
+    public void readHistory() throws UnauthorizedException {
+        throw new UnauthorizedException("Unauthorized to read history");
+    }
+    public void readUserHistory() throws UnauthorizedException {
+        throw new UnauthorizedException("Unauthorized to read history");
+    }
 }
