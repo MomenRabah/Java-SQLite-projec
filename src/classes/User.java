@@ -85,6 +85,10 @@ public class User {
         throw new UnauthorizedException("Unauthorized to read storage");
     }
 
+    public void showStorage() throws UnauthorizedException {
+        throw new UnauthorizedException("Unauthorized to show storage");
+    }
+
     public void readStorages() throws UnauthorizedException {
         throw new UnauthorizedException("Unauthorized to read storages");
     }

@@ -141,6 +141,29 @@ public class ProductService {
         return false;
     }
 
+    public List<Product> getAllProductsByStorageId(int storageId) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM Products WHERE storageId = ?";
+        try (Connection conn = SQLiteConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, storageId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int row = rs.getInt("row");
+                    int column = rs.getInt("column");
+                    String name = rs.getString("name");
+
+                    products.add(new Product(productId, storageId, row, column, name));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving products: " + e.getMessage());
+        }
+        return products;
+    }
+
 
 
 }

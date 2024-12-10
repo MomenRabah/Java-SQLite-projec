@@ -74,7 +74,8 @@ public class Inventory {
             System.out.println("3. Update Storage");
             System.out.println("4. Delete Storage");
             System.out.println("5. Read Storage");
-            System.out.println("6. Back to Main Menu");
+            System.out.println("6. Show Storage");
+            System.out.println("7. Back to Main Menu");
             System.out.print("Choose an option: ");
 
             int choice = getUserInput(scanner);
@@ -114,7 +115,14 @@ public class Inventory {
                         System.err.println(e.getMessage());
                     }
                 }
-                case 6 -> isRunning = false;
+                case 6 -> {
+                    try {
+                        this.currentUser.showStorage();
+                    }catch (UnauthorizedException e) {
+                        System.err.println(e.getMessage());
+                    }
+                }
+                case 7 -> isRunning = false;
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }

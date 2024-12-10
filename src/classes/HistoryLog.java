@@ -25,7 +25,6 @@ public class HistoryLog{
     public static void historyAuth(User user,AuthAction action){
         Date date = new Date();
         String x= (user.getUsername()  + " has "+action.name()+" at "+ date);
-        System.out.println("test");
         historyLogService.createHistoryLog(x,user.getUserid());
     }
 

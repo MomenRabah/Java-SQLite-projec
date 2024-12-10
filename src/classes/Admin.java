@@ -135,5 +135,12 @@ public class Admin extends User {
         int userId = scanner.nextInt();
         HistoryLog.printAllUserHistoryLogs(userId);
     }
+
+    @Override
+    public void showStorage(){
+        System.out.println("Enter storage ID to show:");
+        int storageId = scanner.nextInt();
+        Storage.displayStorageLayout(storageId);
+    }
 }
 

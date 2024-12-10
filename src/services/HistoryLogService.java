@@ -16,7 +16,6 @@ public class HistoryLogService {
             pstmt.executeUpdate();
             System.out.println("History log entry created.");
         } catch (Exception e) {
-            System.out.println("testeing!!");
             System.err.println(e.getMessage());
         }
     }

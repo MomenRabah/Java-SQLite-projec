@@ -1,6 +1,9 @@
 package classes;
 
+import services.ProductService;
 import services.StorageService;
+
+import java.util.List;
 
 public class Storage{
     private final int storageId;
@@ -8,7 +11,7 @@ public class Storage{
     private int columns;
 
     static StorageService storageService = new StorageService();
-
+    static ProductService productService = new ProductService();
 
     public Storage(int storageId, int rows, int columns){
 
@@ -42,6 +45,9 @@ public class Storage{
         this.rows = rows;
     }
 
+    public int getColumns(){
+        return this.columns;
+    }
     public void setColumns(int columns) {
         this.columns = columns;
     }
@@ -154,5 +160,56 @@ public class Storage{
         } else{
             System.out.println("Storage with ID " + storageId + " not found.");
         }
+    }
+
+    public static void displayStorageLayout(int storageId) {
+        Storage storage = storageService.getStorageById(storageId);
+        if(storage == null){
+            System.err.println("Storage with ID " + storageId + " not found.");
+            return;
+        }
+        List<Product> products = productService.getAllProductsByStorageId(storageId);
+
+        String[][] grid = new String[storage.getRows()][storage.getColumns()];
+        for (int i = 0; i < storage.getRows(); i++) {
+            for (int j = 0; j < storage.getColumns(); j++) {
+                grid[i][j] = " ";
+            }
+        }
+        System.out.println(storage.getStorageDetails());
+        for (Product product : products) {
+            int row = product.getRow() - 1;
+            int col = product.getColumn() - 1;
+            if (row >= 0 && row < storage.getRows() && col >= 0 && col < storage.getColumns()) {
+                grid[row][col] = String.valueOf(product.getProductId());
+            }
+        }
+
+        System.out.println("Storage Layout:");
+
+        printHorizontalBorder(storage.getColumns());
+
+        for (int i = 0; i < storage.getRows(); i++) {
+            System.out.print("|");
+            for (int j = 0; j < storage.getColumns(); j++) {
+                System.out.print(" " + grid[i][j] + " |");
+            }
+            System.out.println();
+            printHorizontalBorder(storage.getColumns());
+        }
+
+        System.out.println("\nProducts in this storage:");
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            System.out.printf("%d] Product with ID: %d at position (row: %d, column: %d)%n",
+                    i + 1, product.getProductId(), product.getRow(), product.getColumn());
+        }
+    }
+
+    private static void printHorizontalBorder(int columns) {
+        for (int i = 0; i < columns; i++) {
+            System.out.print("----");
+        }
+        System.out.println("-");
     }
 }
