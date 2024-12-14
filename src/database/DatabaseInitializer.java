@@ -1,11 +1,17 @@
 package database;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 387d506a5968bc18bd74a74d83c400925709fc0b
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseInitializer {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 387d506a5968bc18bd74a74d83c400925709fc0b
     public static void initialize() {
         // Check if tables exist
         if (tablesExist()) {
@@ -26,6 +32,7 @@ public class DatabaseInitializer {
                 "columns INTEGER NOT NULL);";
 
         String createProductsTable = "CREATE TABLE IF NOT EXISTS Products (" +
+<<<<<<< HEAD
                 "productId INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "storageId INTEGER NOT NULL," +
                 "row INTEGER NOT NULL," +
@@ -42,6 +49,24 @@ public class DatabaseInitializer {
                 "date TEXT NOT NULL," +
                 "FOREIGN KEY (userId) REFERENCES Users(userId));";
 
+=======
+                "productId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "storageId INTEGER NOT NULL, " +
+                "row INTEGER NOT NULL, " +
+                "column INTEGER NOT NULL, " +
+                "name TEXT NOT NULL, " +
+                "FOREIGN KEY (storageId) REFERENCES Storages(storageId), " +
+                "UNIQUE (storageId, row, column));";
+
+
+        String createHistoryLogsTable = "CREATE TABLE IF NOT EXISTS HistoryLogs (" +
+                "logId INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "log TEXT NOT NULL," +
+                "userId INTEGER NOT NULL," +  // Fixed the syntax here (removed the extra 'INTEGER')
+                "FOREIGN KEY (userId) REFERENCES Users(userId));";
+
+
+>>>>>>> 387d506a5968bc18bd74a74d83c400925709fc0b
         try (Connection conn = SQLiteConnection.connect();
              Statement stmt = conn.createStatement()) {
 
